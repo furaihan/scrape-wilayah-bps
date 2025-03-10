@@ -16,7 +16,7 @@ class Program
         IWilayahApiService apiService = new WilayahApiService(logger);
         IWilayahScraperService scraperService = new WilayahScraperService(apiService, logger);
         IDataExportService exportService = new DataExportService.DataExportService(logger);
-        IStatisticsService statisticsService = new StatisticsService(logger);
+        IStatisticService statisticService = new StatisticService.StatisticService(logger);
 
         try
         {
@@ -30,7 +30,7 @@ class Program
             exportService.SaveToJson(allData, "wilayah_indonesia.json");
                 
             // Display statistics
-            statisticsService.DisplayStatistics(allData);
+            statisticService.DisplayStatistics(allData);
                 
             logger.Success("Process completed successfully!");
         }
