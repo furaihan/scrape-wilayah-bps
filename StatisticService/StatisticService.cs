@@ -3,11 +3,11 @@ using ScrapeWilayah.Model;
 
 namespace ScrapeWilayah.StatisticService;
 
-public class StatisticsService : IStatisticsService
+public class StatisticService : IStatisticService
 {
     private readonly ILogger _logger;
 
-    public StatisticsService(ILogger logger)
+    public StatisticService(ILogger logger)
     {
         _logger = logger;
     }

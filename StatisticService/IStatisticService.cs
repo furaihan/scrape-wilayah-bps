@@ -2,7 +2,7 @@ using ScrapeWilayah.Model;
 
 namespace ScrapeWilayah.StatisticService;
 
-public interface IStatisticsService
+public interface IStatisticService
 {
     void DisplayStatistics(List<WilayahData> data);
 }
