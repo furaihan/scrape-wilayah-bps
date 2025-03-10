@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapeWilayah", "ScrapeWilayah.csproj", "{40B0C147-4BC7-4A18-96E0-31C97E3BF748}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40B0C147-4BC7-4A18-96E0-31C97E3BF748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B0C147-4BC7-4A18-96E0-31C97E3BF748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B0C147-4BC7-4A18-96E0-31C97E3BF748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B0C147-4BC7-4A18-96E0-31C97E3BF748}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
