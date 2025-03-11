@@ -3,26 +3,16 @@ using ScrapeWilayah.Logger;
 using ScrapeWilayah.Model;
 namespace ScrapeWilayah.ScraperService;
 
-public class WilayahScraperService : IWilayahScraperService
+public class WilayahScraperService(IWilayahApiService apiService, ILogger logger, int delayMs = 300)
+    : IWilayahScraperService
 {
-    private readonly IWilayahApiService _apiService;
-    private readonly ILogger _logger;
-    private readonly int _delayMs;
-
-    public WilayahScraperService(IWilayahApiService apiService, ILogger logger, int delayMs = 300)
-    {
-        _apiService = apiService;
-        _logger = logger;
-        _delayMs = delayMs;
-    }
-
     public async Task<List<WilayahData>> ScrapeAllWilayahAsync()
     {
         List<WilayahData> allData = new List<WilayahData>();
-        _logger.Info("Starting to scrape provinces...");
+        logger.Info("Starting to scrape provinces...");
         
-        var provinsiList = await _apiService.GetWilayahAsync("provinsi");
-        _logger.Info($"Found {provinsiList.Count} provinces");
+        var provinsiList = await apiService.GetWilayahAsync("provinsi");
+        logger.Info($"Found {provinsiList.Count} provinces");
         
         for (int i = 0; i < provinsiList.Count; i++)
         {
@@ -31,16 +21,16 @@ public class WilayahScraperService : IWilayahScraperService
             allData.AddRange(provinsiData);
         }
         
-        _logger.Success($"Scraping completed. Total records: {allData.Count}");
+        logger.Success($"Scraping completed. Total records: {allData.Count}");
         return allData;
     }
 
     private async Task<List<WilayahData>> ScrapeProvinsiAsync(dynamic provinsi, int index, int total)
     {
         List<WilayahData> provinsiData = new List<WilayahData>();
-        _logger.Info($"Processing province {index}/{total}: {provinsi.nama_bps}");
+        logger.Info($"Processing province {index}/{total}: {provinsi.nama_bps}");
         
-        var kabupatenList = await _apiService.GetWilayahAsync("kabupaten", provinsi.kode_bps);
+        var kabupatenList = await apiService.GetWilayahAsync("kabupaten", provinsi.kode_bps);
         
         for (int i = 0; i < kabupatenList.Count; i++)
         {
@@ -55,9 +45,9 @@ public class WilayahScraperService : IWilayahScraperService
     private async Task<List<WilayahData>> ScrapeKabupatenAsync(dynamic provinsi, dynamic kabupaten, int index, int total)
     {
         List<WilayahData> kabupatenData = new List<WilayahData>();
-        _logger.Info($"  Processing district {index}/{total}: {kabupaten.nama_bps}");
+        logger.Info($"  Processing district {index}/{total}: {kabupaten.nama_bps}");
         
-        var kecamatanList = await _apiService.GetWilayahAsync("kecamatan", kabupaten.kode_bps);
+        var kecamatanList = await apiService.GetWilayahAsync("kecamatan", kabupaten.kode_bps);
         
         foreach (var kecamatan in kecamatanList)
         {
@@ -66,9 +56,9 @@ public class WilayahScraperService : IWilayahScraperService
         }
         
         // Delay to prevent overwhelming the server
-        if (_delayMs > 0)
+        if (delayMs > 0)
         {
-            await Task.Delay(_delayMs);
+            await Task.Delay(delayMs);
         }
         
         return kabupatenData;

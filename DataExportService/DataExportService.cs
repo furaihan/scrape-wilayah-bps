@@ -5,20 +5,13 @@ using ScrapeWilayah.Model;
 
 namespace ScrapeWilayah.DataExportService;
 
-public class DataExportService : IDataExportService
+public class DataExportService(ILogger logger) : IDataExportService
 {
-    private readonly ILogger _logger;
-
-    public DataExportService(ILogger logger)
-    {
-        _logger = logger;
-    }
-
     public void SaveToCsv(List<WilayahData> data, string filePath)
     {
         try
         {
-            _logger.Info($"Saving {data.Count} records to CSV: {filePath}");
+            logger.Info($"Saving {data.Count} records to CSV: {filePath}");
             StringBuilder csv = new StringBuilder();
 
             // Header CSV
@@ -48,11 +41,11 @@ public class DataExportService : IDataExportService
             }
 
             File.WriteAllText(filePath, csv.ToString());
-            _logger.Success($"CSV file saved successfully: {filePath}");
+            logger.Success($"CSV file saved successfully: {filePath}");
         }
         catch (Exception ex)
         {
-            _logger.Error($"Error saving CSV file: {filePath}", ex);
+            logger.Error($"Error saving CSV file: {filePath}", ex);
             throw;
         }
     }
@@ -61,15 +54,15 @@ public class DataExportService : IDataExportService
     {
         try
         {
-            _logger.Info($"Saving {data.Count} records to JSON: {filePath}");
+            logger.Info($"Saving {data.Count} records to JSON: {filePath}");
             var options = new JsonSerializerOptions { WriteIndented = true };
             string jsonString = JsonSerializer.Serialize(data, options);
             File.WriteAllText(filePath, jsonString);
-            _logger.Success($"JSON file saved successfully: {filePath}");
+            logger.Success($"JSON file saved successfully: {filePath}");
         }
         catch (Exception ex)
         {
-            _logger.Error($"Error saving JSON file: {filePath}", ex);
+            logger.Error($"Error saving JSON file: {filePath}", ex);
             throw;
         }
     }
