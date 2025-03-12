@@ -12,7 +12,7 @@ public class StatisticService(ILogger logger) : IStatisticService
         // Count unique provinces, districts, and subdistricts
         var totalProvinsi = data.Select(x => x.nama_provinsi).Distinct().Count();
         var totalKabupaten = data.Select(x => x.nama_kabupaten).Distinct().Count();
-        var totalKecamatan = data.Select(x => x.nama_kecamatan).Distinct().Count();
+        var totalKecamatan = data.Select(x => x.kode_kecamatan).Distinct().Count();
 
         logger.Statistic("Statistics for Indonesian Regional Data:");
         logger.Statistic($"Total Provinces: {totalProvinsi}");
